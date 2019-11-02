@@ -1,21 +1,36 @@
-import React, { Children } from 'react'
+import createDataContext from './createDataContext'
 
 interface BlogPost {
   title: string
 }
 
-const BlogContext = React.createContext(null)
-export const BlogProvider = ({children}) => {
-
-  const blogPosts: BlogPost[] = [
-    {title: "Test1"},
-    {title: "Test2"},
-
-  ]
-
-  return <BlogContext.Provider value={5}>
-    {children}
-  </BlogContext.Provider>
+interface BlogContextInterface {
+  blogPosts: BlogPost[]
+  addBlogPost?: () => void
 }
 
-export default BlogContext
+export enum BlogPostActions {
+  ADD_BLOG_POST = 'add_blog_post'
+}
+
+const blogReducer = (state: BlogPost[], action: any) => {
+  switch (action.type) {
+    case BlogPostActions.ADD_BLOG_POST:
+      return [...state, { title: `Another blog posts` }]
+    default:
+      return state
+  }
+}
+
+const addBlogPost = dispatch => {
+  return () => {
+    dispatch({type: BlogPostActions.ADD_BLOG_POST})
+  }
+}
+
+export const { Context, Provider } = createDataContext<BlogContextInterface>(
+  blogReducer,
+  { addBlogPost },
+  [],
+  "blogPosts"
+)
