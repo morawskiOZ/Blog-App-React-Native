@@ -24,12 +24,13 @@ const blogReducer = (state: BlogPost[], action: any) => {
 
 const addBlogPost = dispatch => {
   return () => {
-    dispatch(BlogPostActions.ADD_BLOG_POST)
+    dispatch({type: BlogPostActions.ADD_BLOG_POST})
   }
 }
 
 export const { Context, Provider } = createDataContext<BlogContextInterface>(
   blogReducer,
   { addBlogPost },
-  []
+  [],
+  "blogPosts"
 )

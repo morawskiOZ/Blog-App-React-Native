@@ -1,15 +1,14 @@
 import React, { useContext } from 'react'
 import { Button, StyleSheet, Text, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
-import { Context, BlogPostActions } from '../context/BlogContext'
+import { Context } from '../context/BlogContext'
 
 const IndexScreen = () => {
   const { blogPosts, addBlogPost } = useContext(Context)
   return (
     <View>
       <Text>Index Screen</Text>
-      <Button title='Add post' onPress={() => addBlogPost()} />
-      
+      <Button title='Add post' onPress={addBlogPost} />
       {!!blogPosts.length && (
         <FlatList
           data={blogPosts}

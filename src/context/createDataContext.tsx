@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react'
 
-const createDataContext = < T extends {}>(reducer, actions, initialState) => {
+const createDataContext = < T extends {}>(reducer, actions, initialState, stateName: string = 'state') => {
   const Context = React.createContext<T>({} as T)
 
   const Provider = ({ children }) => {
@@ -13,7 +13,7 @@ const createDataContext = < T extends {}>(reducer, actions, initialState) => {
     }
 
     return (
-      <Context.Provider value={{ state, ...boundAction }as any}>
+      <Context.Provider value={{ [stateName]: state, ...boundAction }as any}>
         {children}
       </Context.Provider>
     )
