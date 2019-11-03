@@ -1,14 +1,21 @@
 import { Feather } from '@expo/vector-icons'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import { NavigationContext } from 'react-navigation'
+
 import { Context } from '../context/BlogContext'
 
 const IndexScreen = ({ navigate }) => {
   const navigation = useContext(NavigationContext)
+  const { blogPosts, deleteBlogPost, getBlogPosts } = useContext(Context)
 
-  const { blogPosts, addBlogPost, deleteBlogPost } = useContext(Context)
+  useEffect(() => {
+    getBlogPosts()
+    const listener = navigation.addListener('didFocus', () => getBlogPosts())
+    return () => listener.remove()
+  }, [])
+
   return (
     <View>
       {!!blogPosts.length && (
@@ -62,7 +69,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 10,
     borderTopWidth: 1,
-    borderColor: 'grey',
+    borderColor: 'grey'
   },
   lastRow: {
     borderBottomWidth: 1
@@ -70,14 +77,14 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     textAlign: 'center',
-    textAlignVertical: 'center',
+    textAlignVertical: 'center'
   },
   icon: {
     paddingHorizontal: 15,
     paddingVertical: 10,
     fontSize: 24,
     marginRight: 15,
-    color: 'red',
+    color: 'red'
   }
 })
 
