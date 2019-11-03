@@ -13,7 +13,6 @@ const ShowScreen = () => {
     <View>
       <Text>{blogPost.title}</Text>
       <Text>{blogPost.content}</Text>
-
     </View>
   )
 }

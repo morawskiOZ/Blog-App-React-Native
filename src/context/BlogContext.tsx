@@ -26,14 +26,14 @@ export enum BlogPostActions {
   EDIT_BLOG_POST = 'edit_blog_post'
 }
 
-const blogReducer = (state: BlogPost[], action: DispatchValue): BlogPost[] => {
+const blogReducer = (state: BlogPost[], action: DispatchValue<BlogPost>): BlogPost[] => {
   switch (action.type) {
     case BlogPostActions.ADD_BLOG_POST:
       return [
         ...state,
         {
           title: action.payload.title,
-          content: action.payload.text,
+          content: action.payload.content,
           id: Math.floor(Math.random() * 9999)
         }
       ]
@@ -42,15 +42,11 @@ const blogReducer = (state: BlogPost[], action: DispatchValue): BlogPost[] => {
         ...state.filter(
           (blogPost: BlogPost) => blogPost.id !== action.payload.id
         ),
-        {
-          title: action.payload.title,
-          content: action.payload.text,
-          id: action.payload.id
-        }
+        action.payload
       ]
     case BlogPostActions.DELETE_BLOG_POST:
       return state.filter(
-        (blogPost: BlogPost) => blogPost.id !== action.payload
+        (blogPost: BlogPost) => blogPost.id !== action.payload.id
       )
     default:
       return state
@@ -69,9 +65,9 @@ const addBlogPost = (dispatch: Dispatch<DispatchValue<Partial<BlogPost>>>) => {
   }
 }
 
-const deleteBlogPost = (dispatch: Dispatch<DispatchValue<number>>) => {
+const deleteBlogPost = (dispatch: Dispatch<DispatchValue<Partial<BlogPost>>>) => {
   return (id: number) => {
-    dispatch({ type: BlogPostActions.DELETE_BLOG_POST, payload: id })
+    dispatch({ type: BlogPostActions.DELETE_BLOG_POST, payload: {id} })
   }
 }
 
@@ -91,6 +87,6 @@ export const getBlogPostById = (blogPosts: BlogPost[], id: number) =>
 export const { Context, Provider } = createDataContext<BlogContextInterface>(
   blogReducer,
   { addBlogPost, deleteBlogPost, editBlogPost },
-  [],
+  [{id: "1", title: "test1", content: "test2"}],
   'blogPosts'
 )

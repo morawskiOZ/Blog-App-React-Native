@@ -43,8 +43,8 @@ IndexScreen.navigationOptions = ({ navigation: { navigate } }) => {
       <TouchableOpacity onPress={() => navigate('Create')}>
         <Feather
           name='plus'
-          size={30}
-          style={{ padding: 10, marginRight: 15 }}
+          size={35}
+          style={{ padding: 10, marginRight: 25, color: '#428bca' }}
         />
       </TouchableOpacity>
     )
@@ -59,26 +59,25 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignContent: 'center',
-    paddingVertical: 20,
+    paddingVertical: 5,
     paddingHorizontal: 10,
     borderTopWidth: 1,
     borderColor: 'grey',
-    color: 'red'
   },
   lastRow: {
     borderBottomWidth: 1
   },
   title: {
     fontSize: 18,
-    textAlign: 'center'
+    textAlign: 'center',
+    textAlignVertical: 'center',
   },
   icon: {
     paddingHorizontal: 15,
-    paddingVertical: 5,
+    paddingVertical: 10,
     fontSize: 24,
     marginRight: 15,
-    borderWidth: 2,
-    borderColor: 'black'
+    color: 'red',
   }
 })
 

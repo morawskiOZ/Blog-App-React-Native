@@ -1,43 +1,49 @@
-import React, { ReactElement, useState, useContext } from 'react'
-import { View, Text, StyleSheet, TextInput, Button } from 'react-native'
-import { NavigationContext } from 'react-navigation'
+import React, { ReactElement, useState } from 'react'
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
 
 interface Props {
-  formTitleName: string,
-  titleInputLabel: string,
+  formTitleName: string
+  titleInputLabel: string
   contentInputLabel: string
-  initialTitle: string
-  initialContent: string
-  callback: Function
-
+  initialTitle?: string
+  initialContent?: string
+  buttonText: string
+  onSubmit: (title, content) => void
 }
 
-const Form = ({initialContent, initialTitle,contentInputLabel,formTitleName,titleInputLabel, callback}: Props): ReactElement  => {
+const Form = ({
+  initialContent = "",
+  initialTitle= "",
+  contentInputLabel,
+  formTitleName,
+  titleInputLabel,
+  onSubmit,
+  buttonText
+}: Props): ReactElement => {
   const [title, setTitle] = useState(initialTitle)
   const [content, setContent] = useState(initialContent)
-  const navigation = useContext(NavigationContext)
   return (
     <View>
-    <Text style={styles.title}>{formTitleName}</Text>
-    <Text style={styles.label}>{titleInputLabel}</Text>
-    <TextInput
-      value={title}
-      onChangeText={text => setTitle(text)}
-      style={styles.input}
-    />
-    <Text style={styles.label}>{contentInputLabel}</Text>
-    <TextInput
-      value={content}
-      onChangeText={content => setContent(content)}
-      style={[styles.input, styles.textArea]}
-    />
-    <View style={styles.button}>
-      <Button
-        title='Update Blog Post'
-        onPress={() => callback()}
+      <Text style={styles.title}>{formTitleName}</Text>
+      <Text style={styles.label}>{titleInputLabel}</Text>
+      <TextInput
+        value={title}
+        onChangeText={text => setTitle(text)}
+        style={styles.input}
       />
+      <Text style={styles.label}>{contentInputLabel}</Text>
+      <TextInput
+        value={content}
+        onChangeText={content => setContent(content)}
+        style={[styles.input, styles.textArea]}
+      />
+      <View style={styles.button}>
+        <Button
+          title={buttonText}
+          onPress={() => onSubmit(title, content)}
+        />
+      </View>
     </View>
-  </View>
   )
 }
 
@@ -63,7 +69,7 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   button: {
-    margin: 10,
+    margin: 10
   }
 })
 
